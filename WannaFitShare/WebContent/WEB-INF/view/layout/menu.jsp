@@ -9,5 +9,5 @@
 <a href="${initParam.rootPath}/customer/list.do?pageNo=${param.pageNo}">
 고객목록
 </a>
-
+<a href="${initParam.rootPath}/customer/search_name.do">친구 찾기</a>
 <hr>

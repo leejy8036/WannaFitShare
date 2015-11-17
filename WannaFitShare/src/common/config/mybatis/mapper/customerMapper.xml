@@ -45,6 +45,11 @@
 		<include refid="select-sql" />
 		order by cs_id asc
 	</select>
+		<!-- selectByName -->
+	<select id="selectCustomersByName" parameterType ="string" resultMap="customer-resultmap">
+	<include refid="select-sql"/>
+	order by cs_id asc
+	</select>
 	
 	<!-- paging -->
 	<select id="selectCustomersPaging" parameterType="hashmap" resultMap="customer-constructor-resultmap">
