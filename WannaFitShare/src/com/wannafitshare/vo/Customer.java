@@ -9,66 +9,54 @@ public class Customer implements Serializable {
 	private String csName;
 	private String csEmail;
 	private String csPhone;
-
 	public Customer() {
+		super();
 	}
-
 	public Customer(String csId, String csPassword, String csName,
 			String csEmail, String csPhone) {
+		super();
 		this.csId = csId;
 		this.csPassword = csPassword;
 		this.csName = csName;
 		this.csEmail = csEmail;
 		this.csPhone = csPhone;
 	}
-
 	public String getCsId() {
 		return csId;
 	}
-
 	public void setCsId(String csId) {
 		this.csId = csId;
 	}
-
 	public String getCsPassword() {
 		return csPassword;
 	}
-
 	public void setCsPassword(String csPassword) {
 		this.csPassword = csPassword;
 	}
-
 	public String getCsName() {
 		return csName;
 	}
-
 	public void setCsName(String csName) {
 		this.csName = csName;
 	}
-
 	public String getCsEmail() {
 		return csEmail;
 	}
-
 	public void setCsEmail(String csEmail) {
 		this.csEmail = csEmail;
 	}
-
 	public String getCsPhone() {
 		return csPhone;
 	}
-
 	public void setCsPhone(String csPhone) {
 		this.csPhone = csPhone;
 	}
-
 	@Override
 	public String toString() {
 		return "Customer [csId=" + csId + ", csPassword=" + csPassword
 				+ ", csName=" + csName + ", csEmail=" + csEmail + ", csPhone="
 				+ csPhone + "]";
 	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -81,7 +69,6 @@ public class Customer implements Serializable {
 		result = prime * result + ((csPhone == null) ? 0 : csPhone.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

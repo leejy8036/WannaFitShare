@@ -35,6 +35,17 @@ public class CustomerController {
 	@Autowired
 	private CustomerService service;
 
+	//로그인 처리
+	@RequestMapping("/login/login.do")
+	public String loginCustomer(@RequestParam String csId,
+			@RequestParam String csPassword, ModelMap model) {
+		System.out.println("로그인 정보 : " + csId + " - " + csPassword);
+		Customer customer = (Customer) service.customerLogin(csId, csPassword);
+		System.out.println(customer);
+		model.addAttribute("customer", customer);
+		return "customer/login_success.tiles";
+	}
+
 	//고객 ID로 고객 조회 처리 Handler
 	@RequestMapping("/findById")
 	public String findById(@RequestParam String csId, ModelMap model) {
@@ -42,11 +53,11 @@ public class CustomerController {
 		model.addAttribute("customer", customer);
 		return "customer/customer_info.tiles";
 	}
-	
+
 	@RequestMapping("/findByName")
-	public	String findByName(@RequestParam String csName,ModelMap model){
-		List<Customer> list =service.findCustomerByName(csName);
-		model.addAttribute("namelist",list);
+	public String findByName(@RequestParam String csName, ModelMap model) {
+		List<Customer> list = service.findCustomerByName(csName);
+		model.addAttribute("namelist", list);
 		return "customer/search_success.tiles";
 	}
 	//고객 List 조회처리 Handler
