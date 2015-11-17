@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper name 설정 -->
+<mapper namespace="customerMapper">
+
+	<!-- resultMap 설정 -->
+	<resultMap type="customer" id="customer-resultmap"		  >
+		<id 	property="csId" 		column="cs_id" 		 />
+		<result property="csPassword"   column="cs_password" />
+		<result property="csName" 	  	column="cs_name" 	 />
+		<result property="csEmail" 		column="cs_email" 	 />
+		<result property="csPhone" 		column="cs_phone" 	 />
+	</resultMap>
+
+	<resultMap type="customer" id="customer-constructor-resultmap">
+		<constructor>
+			<idArg column="cs_id" 	    javaType="string" />
+			<arg   column="cs_password" javaType="string" />
+			<arg   column="cs_name" 	javaType="string" />
+			<arg   column="cs_email" 	javaType="string" />
+			<arg   column="cs_phone" 	javaType="string" />
+		</constructor>
+	</resultMap>
+	
+	<!-- sql 설정 -->
+	<sql id="select-column-sql">
+		cs_id,cs_password,cs_name,cs_email,cs_phone
+	</sql>
+	
+	<sql id="select-sql">
+		select
+		<include refid="select-column-sql" />
+		from customer
+	</sql>
+	
+	<!-- selectCustomerById -->
+	<select id="selectCustomerById" parameterType="string" resultMap="customer-resultmap">
+		<include refid="select-sql" />
+		where cs_id=#{csId}
+	</select>
+	
+	<!-- selectCustomers -->
+	<select id="selectCustomers" parameterType="string" resultMap="customer-resultmap">
+		<include refid="select-sql" />
+		order by cs_id asc
+	</select>
+	
+	<!-- paging -->
+	<select id="selectCustomersPaging" parameterType="hashmap" resultMap="customer-constructor-resultmap">
+		select <include refid="select-column-sql" />
+		from (
+			 select ceil(rownum/#{contentsPerPage}) page,<include refid="select-column-sql" />
+			 from(
+				 select <include refid="select-column-sql" />
+				 from customer
+					order by cs_id
+			)
+		)
+		where page = #{pageNo}
+	</select>
+	
+	<!-- selectCountCustomers -->
+	<select id="selectCountCustomers" resultType="_int">
+		select count(cs_id) from customer
+	</select>
+	
+	<!-- insertCustomer -->
+	<insert id="insertCustomer" parameterType="customer">
+		insert into customer ( <include refid="select-column-sql" /> ) 
+		values (#{csId}, #{csPassword}, #{csName},#{csEmail}, #{csPhone})
+	</insert>
+	
+	<!-- deleteCustomerById -->
+	<delete id="deleteCustomerById" parameterType="string">
+		delete from customer where cs_id=#{csId}
+	</delete>
+	
+	<!-- updateCustomer -->
+	<update id="updateCustomer" parameterType="customer">
+		update customer 
+		set cs_password=#{csPassword}, cs_name=#{csName},cs_email=#{csEmail}, cs_phone=#{csPhone}
+		where cs_id=#{csId}
+	</update>
+</mapper>
