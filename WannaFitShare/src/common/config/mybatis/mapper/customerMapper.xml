@@ -47,8 +47,9 @@
 	</select>
 		<!-- selectByName -->
 	<select id="selectCustomersByName" parameterType ="string" resultMap="customer-resultmap">
-	<include refid="select-sql"/>
-	order by cs_id asc
+		select cs_id,cs_password,cs_name,cs_email,cs_phone 
+		from customer 
+		where cs_name=#{csName}
 	</select>
 	
 	<!-- paging -->

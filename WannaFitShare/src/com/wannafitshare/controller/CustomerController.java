@@ -45,9 +45,9 @@ public class CustomerController {
 	}
 	
 	@RequestMapping("/findByName")
-	public String findByName(@RequestParam String csName,ModelMap model){
+	public	String findByName(@RequestParam String csName,ModelMap model){
 		List<Customer> list =service.findCustomerByName(csName);
-		model.addAttribute("list",list);
+		model.addAttribute("namelist",list);
 		return "customer/search_success.tiles";
 	}
 	//고객 List 조회처리 Handler
