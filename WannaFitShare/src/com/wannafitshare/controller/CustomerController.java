@@ -1,6 +1,7 @@
 package com.wannafitshare.controller;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -41,7 +42,13 @@ public class CustomerController {
 		model.addAttribute("customer", customer);
 		return "customer/customer_info.tiles";
 	}
-
+	
+	@RequestMapping("/findByName")
+	public	String findByName(@RequestParam String csName,ModelMap model){
+		List<Customer> list =service.findCustomerByName(csName);
+		model.addAttribute("namelist",list);
+		return "customer/search_success.tiles";
+	}
 	//고객 List 조회처리 Handler
 	@RequestMapping("list")
 	public String list(@RequestParam(defaultValue = "1") String pageNo,
