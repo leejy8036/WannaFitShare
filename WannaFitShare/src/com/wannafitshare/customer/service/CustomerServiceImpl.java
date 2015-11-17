@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.wannafitshare.customer.dao.CustomerDao;
 import com.wannafitshare.customer.exception.CustomerNotFoundException;
@@ -39,11 +40,11 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	public CustomerServiceImpl() {
 	}
+	
 	@Autowired
 	public CustomerServiceImpl(CustomerDao dao){
 		this.dao = dao;
 	}
-	
 	
 	/**
 	 * 고객을 등록하는 메소드.
@@ -52,7 +53,10 @@ public class CustomerServiceImpl implements CustomerService {
 	 * @param customer 등록할 고객 정보를 가진 Customer객체를 받을 매개변수.
 	 * @throws DuplicatedIdException
 	 * @throws SQLException 
+	 * @Transactional Transaction이 필요한 메소드 선언부에 @Transactional 어노테이션으로 등록
+	 *                rollbackFor - 지정된 Exception 타입 모두 롤백대상이됨.,롤백할 예외타입 설정.Class 배열(rollbackFor={XX.class}
 	 */
+	@Transactional(rollbackFor={Exception.class})
 	@Override
 	public void addCustomer(Customer customer) throws DuplicatedIdException,SQLException{
 			//등록할 고객의 id로 고객조회
@@ -74,6 +78,7 @@ public class CustomerServiceImpl implements CustomerService {
 	 * @throws SQLException 
 	 */
 	@Override
+	@Transactional(rollbackFor={Exception.class})
 	public void removeCustomer(String csId) throws CustomerNotFoundException{
 		Customer cust = dao.selectCustomerById(csId);
 		if(cust==null){
@@ -121,6 +126,7 @@ public class CustomerServiceImpl implements CustomerService {
 	 * @throws CustomerNotFoundException 수정할 고객이 DB에 없으면 발생
 	 */
 	@Override
+	@Transactional(rollbackFor={Exception.class})
 	public void updateCustomer(Customer newCust) throws CustomerNotFoundException{
 			Customer cust = dao.selectCustomerById(newCust.getCsId());
 			if(cust==null){

@@ -5,12 +5,16 @@
 		"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <!-- Definitions for Tiles documentation   -->
 <tiles-definitions>
+
+	<!-- abstract definition : 다른 definition에서 참조할 설정 -->
 	<definition name="template" template="/WEB-INF/view/layout/template.jsp">
 		<put-attribute name="menu" value="/WEB-INF/view/layout/menu.jsp"/>
 	</definition>
+	<!-- 경로가 없는 view-name -->
 	<definition name="*.tiles" extends="template">
 		<put-attribute name="body" value="/WEB-INF/view/section/{1}.jsp"/>
 	</definition>
+	<!-- 경로가 하나 있는 view-name -->
 	<definition name="*/*.tiles" extends="template">
 		<put-attribute name="body" value="/WEB-INF/view/section/{1}/{2}.jsp"/>
 	</definition>
