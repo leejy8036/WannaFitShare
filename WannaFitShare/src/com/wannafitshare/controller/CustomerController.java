@@ -39,11 +39,13 @@ public class CustomerController {
 	@RequestMapping("/login/login.do")
 	public String loginCustomer(@RequestParam String csId,
 			@RequestParam String csPassword, ModelMap model) {
-		System.out.println("로그인 정보 : " + csId + " - " + csPassword);
+//		System.out.println("로그인 정보 : " + csId + " - " + csPassword);
 		Customer customer = (Customer) service.customerLogin(csId, csPassword);
-		System.out.println(customer);
+//		System.out.println(customer);
 		model.addAttribute("customer", customer);
 		return "customer/login_success.tiles";
+		
+		
 	}
 
 	//고객 ID로 고객 조회 처리 Handler

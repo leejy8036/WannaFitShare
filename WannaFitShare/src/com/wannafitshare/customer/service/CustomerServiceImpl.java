@@ -44,7 +44,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Customer customerLogin(String csId, String csPassword) {
-		System.out.println("customerLogin() - service");
+//		System.out.println("customerLogin() - service");
 		return dao.customerLogin(csId, csPassword);
 	}
 	/**
