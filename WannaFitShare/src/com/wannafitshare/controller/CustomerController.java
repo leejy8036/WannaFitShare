@@ -36,6 +36,7 @@ public class CustomerController {
 	@Autowired
 	private CustomerService service;
 	
+
 	//고객 ID로 고객 조회 처리 Handler
 	@RequestMapping("/findById")
 	public String findById(@RequestParam String csId, ModelMap model){
@@ -44,6 +45,7 @@ public class CustomerController {
 		return "customer/customer_info.tiles";
 	}
 	
+	//고객 이름으로 고객 조회 처리 Handler
 	@RequestMapping("/findByName")
 	public	String findByName(@RequestParam String csName,ModelMap model){
 		List<Customer> list =service.findCustomerByName(csName);

@@ -22,6 +22,30 @@
 	
 	
 	<mvc:annotation-driven/>
+	
+	<!-- 
+		Interceptor 등록 - 여러 있을 경우 각각 등록
+		<mvc:interceptors> 하위에 <mvc:interceptor> 태그를 이용해 하나씩 등록
+	 		- <mvc:interceptor> 하위
+	 			- 1. 요청 url pattern 지정 - <mvc:mapping>
+	 			- 2. interceptor bean 을 등록 -<bean> <ref>
+	 
+	     path : ANT 패턴
+		 		* : 글자수(0~n) 상관없이 모든 글자
+		 		? : 1글자
+		 		** : 경로에 사용. 자신포함한 모든 하위경로.
+		 		/**/login/**/* : 경로에 login만 들어가면 된다.	
+     
+		mvc-config.xml에 정의한 인터셉터 코드를 말씀드리자면  여러개의 인터셉터를 정의할수 있습니다.
+		mvc:interceptor 태그들을 mvc:interceptors내에 여러개 정의하여  컨트롤러 성향별로 인터셉터 여러개를 정의할 수 있습니다.
+		ex) 관리자 로그인, 사용자 로그인 등...
+		그리고 mvc:mapping 태그들을 mvc:interceptor 태그내에 여러개 정의하여  하나의 인터셉터로 여러개의 컨트롤러를 제어 할 수 있습니다.
+		ex) 관리자 로그인 후 글쓰기페이지,글수정페이지,삭제기능 등....
+		interceptors 태그 추가를 하였으면  "com.spring.interceptor" 패키지 생성 후에 "Interceptor" 클래스를 생성합니다   
+     -->
+     
+
+	
 	<!-- link 설정-->
 	<!-- 메인페이지 -->
 	<mvc:view-controller path="/index.do" view-name="index.tiles"/>
