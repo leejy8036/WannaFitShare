@@ -11,6 +11,13 @@ create table customer(
 -- 기본값 설정해주는 방식
 -- customerMileage number(7) default 10000 --default는 not null보다 먼저 선언
 
+
+--login
+select cs_id, cs_name, cs_email, cs_phone
+from customer
+where cs_id = 'id-001' and cs_password='1111';
+
+
 --insert
 insert into customer values ('id-001','1111','유재석', 'ryujs@abc.com','010-6363-0844');
 --table customer DB 전체 삭제

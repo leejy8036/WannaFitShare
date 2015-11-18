@@ -6,21 +6,22 @@ import com.wannafitshare.vo.Customer;
 
 public interface CustomerDao {
 
+	Customer customerLogin(String csId, String csPassword);
+
 	int insertCustomer(Customer customer);
-	
+
 	int deleteCustomerById(String csId);
-	
+
 	int updateCustomer(Customer customer);
 
 	Customer selectCustomerById(String customerId);
-	
+
 	List<Customer> selectCustomers();
-	
+
 	List<Customer> selectCustomersPaging(int pageNo);
-	
+
 	List<Customer> selectCustomersByName(String customerName);
-	
+
 	int selectCountCustomers();
-	
 
 }
