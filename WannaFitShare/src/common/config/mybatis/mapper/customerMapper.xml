@@ -33,6 +33,14 @@
 		<include refid="select-column-sql" />
 		from customer
 	</sql>
+	<!-- customer login -->
+	<select id="loginCustomer" parameterType="map" resultMap="customer-resultmap" >
+	select
+	<include refid="select-column-sql" />
+	from customer
+	where cs_id=#{csId} and cs_password=#{csPassword}
+	
+	</select>
 	
 	<!-- selectCustomerById -->
 	<select id="selectCustomerById" parameterType="string" resultMap="customer-resultmap">

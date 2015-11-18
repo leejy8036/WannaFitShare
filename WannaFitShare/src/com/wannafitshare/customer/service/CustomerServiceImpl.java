@@ -32,19 +32,21 @@ import common.util.PagingBean;
  */
 @Service("customerService")
 public class CustomerServiceImpl implements CustomerService {
-	
-	
+
 	private CustomerDao dao;
-	
-	
+
 	public CustomerServiceImpl() {
 	}
 	@Autowired
-	public CustomerServiceImpl(CustomerDao dao){
+	public CustomerServiceImpl(CustomerDao dao) {
 		this.dao = dao;
 	}
-	
-	
+
+	@Override
+	public Customer customerLogin(String csId, String csPassword) {
+		System.out.println("customerLogin() - service");
+		return dao.customerLogin(csId, csPassword);
+	}
 	/**
 	 * 고객을 등록하는 메소드.
 	 *  - 고객 id (id)는 중복될 수 없다.  
@@ -54,18 +56,19 @@ public class CustomerServiceImpl implements CustomerService {
 	 * @throws SQLException 
 	 */
 	@Override
-	public void addCustomer(Customer customer) throws DuplicatedIdException,SQLException{
-			//등록할 고객의 id로 고객조회
-			Customer cust = dao.selectCustomerById(customer.getCsId());
-			if(cust != null){
-				//이미 있는 고객ID이므로 예외발생 시킨다.
-				throw new DuplicatedIdException(customer.getCsId()+"는 이미 등록된 ID입니다.");
-			}
-			//DB에 insert 
-			dao.insertCustomer(customer);		
+	public void addCustomer(Customer customer)
+			throws DuplicatedIdException, SQLException {
+		//등록할 고객의 id로 고객조회
+		Customer cust = dao.selectCustomerById(customer.getCsId());
+		if (cust != null) {
+			//이미 있는 고객ID이므로 예외발생 시킨다.
+			throw new DuplicatedIdException(
+					customer.getCsId() + "는 이미 등록된 ID입니다.");
+		}
+		//DB에 insert 
+		dao.insertCustomer(customer);
 	}
-	
-	
+
 	/**
 	 * 매개변수로 받은 ID의 고객을 찾아 삭제 처리
 	 *  - 매개변수로 받은 ID의 고객이 없으면 처리를 진행하지 않는다. 
@@ -74,10 +77,11 @@ public class CustomerServiceImpl implements CustomerService {
 	 * @throws SQLException 
 	 */
 	@Override
-	public void removeCustomer(String csId) throws CustomerNotFoundException{
+	public void removeCustomer(String csId) throws CustomerNotFoundException {
 		Customer cust = dao.selectCustomerById(csId);
-		if(cust==null){
-			throw new CustomerNotFoundException(csId+"는 없는 ID이므로 삭제할 수 없습니다.");
+		if (cust == null) {
+			throw new CustomerNotFoundException(
+					csId + "는 없는 ID이므로 삭제할 수 없습니다.");
 		}
 		dao.deleteCustomerById(csId);
 	}
@@ -88,10 +92,10 @@ public class CustomerServiceImpl implements CustomerService {
 	 * @throws SQLException
 	 */
 	@Override
-	public List<Customer> getAllCustomers(){
+	public List<Customer> getAllCustomers() {
 		return dao.selectCustomers();
 	}
-	
+
 	/**
 	 * id로 고객을 찾는 메소드
 	 * @param id 조회할 고객의 ID
@@ -99,20 +103,20 @@ public class CustomerServiceImpl implements CustomerService {
 	 * @throws SQLException 
 	 */
 	@Override
-	public Customer findCustomerById(String csId){
-			return dao.selectCustomerById(csId);
+	public Customer findCustomerById(String csId) {
+		return dao.selectCustomerById(csId);
 	}
-	
+
 	/**
 	 * 이름으로 고객을 조회하는 메소드
 	 * @param name 조회할 고객의 이름
 	 * @return customerList에서 조회된 고객들을 담아 리턴할 ArrayList
 	 */
 	@Override
-	public List<Customer>  findCustomerByName(String customerName){
-			return dao.selectCustomersByName(customerName);
+	public List<Customer> findCustomerByName(String customerName) {
+		return dao.selectCustomersByName(customerName);
 	}
-	
+
 	/**
 	 * 매개변수로 받은 고객과 같은 ID를 가진 고객정보를 찾아 수정 처리.
 	 *  - 수정하려는 고객의 ID가 없는 경우 처리를 진행하지 않는다.
@@ -121,24 +125,27 @@ public class CustomerServiceImpl implements CustomerService {
 	 * @throws CustomerNotFoundException 수정할 고객이 DB에 없으면 발생
 	 */
 	@Override
-	public void updateCustomer(Customer newCust) throws CustomerNotFoundException{
-			Customer cust = dao.selectCustomerById(newCust.getCsId());
-			if(cust==null){
-				throw new CustomerNotFoundException(newCust.getCsId()+"는 없는 ID이므로 수정할 수 없습니다.");
-			}
-			dao.updateCustomer(newCust);
+	public void updateCustomer(Customer newCust)
+			throws CustomerNotFoundException {
+		Customer cust = dao.selectCustomerById(newCust.getCsId());
+		if (cust == null) {
+			throw new CustomerNotFoundException(
+					newCust.getCsId() + "는 없는 ID이므로 수정할 수 없습니다.");
+		}
+		dao.updateCustomer(newCust);
 	}
-	
+
 	/**
 	 * 페이징 처리
 	 */
 	@Override
-	public Map getAllCustomersPaging(int pageNo){
+	public Map getAllCustomersPaging(int pageNo) {
 		HashMap map = new HashMap();
 		map.put("list", dao.selectCustomersPaging(pageNo));
-		PagingBean pagingBean = new PagingBean(dao.selectCountCustomers(), pageNo);
+		PagingBean pagingBean = new PagingBean(dao.selectCountCustomers(),
+				pageNo);
 		map.put("pagingBean", pagingBean);
 		return map;
 	}
-	
+
 }//class

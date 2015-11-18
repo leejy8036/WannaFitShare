@@ -5,7 +5,6 @@
 <script type="text/javascript" src="${initParam.rootPath }/script/formcheck.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	$("#regForm").on("submit", registerFormCheck);
 	$("#csId").on("keyup", function(){
 		$.ajax({
 			url:"${initParam.rootPath}/customer/idDuplicatedCheck.do", //요청 url
@@ -37,8 +36,9 @@ $(document).ready(function(){
 <div id="layer"></div>
 <h2>로그인</h2>
 <spring:hasBindErrors name="customer"/>
-<form action="${initParam.rootPath}/customer/add.do" method="post" id="regForm">
+<form action="${initParam.rootPath}/customer/login/login.do" method="post" id="regForm">
 <!-- 요청 처리할 Controller에 대한 구분값 -->
+<input type="hidden" name="loginFlag" value="true">
 <table border="1" style="width:500px">
 	<tr>
 		<th>고객 ID</th>
